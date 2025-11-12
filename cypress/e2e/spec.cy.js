@@ -1,31 +1,28 @@
 // cypress/e2e/spec.cy.js
 
 describe('Volledig geautomatiseerde game test', () => {
-  it('should complete the entire game automatically', () => {
+  it('should complete game with all login fields', () => {
     cy.completeAutomatedGame('Sergio', 31, 'Belgium');
   });
 
-  it('should handle multiple players', () => {
-    const players = [
-      { name: 'Sergio', age: 31, country: 'Belgium' },
-      { name: 'Alice', age: 25, country: 'Netherlands' },
-      { name: 'Bob', age: 28, country: 'France' }
+  it('should test login only with all fields', () => {
+    cy.autoLoginComplete('Sergio', 31, 'Belgium');
+  });
+
+  it('should test multiple players with different data', () => {
+    cy.testMultiplePlayers();
+  });
+
+  it('should test different age scenarios', () => {
+    const testCases = [
+      { name: 'YoungPlayer', age: 18, country: 'Belgium' },
+      { name: 'AdultPlayer', age: 30, country: 'Netherlands' },
+      { name: 'SeniorPlayer', age: 65, country: 'France' }
     ];
 
-    players.forEach(player => {
-      cy.log(`🎮 Start game voor: ${player.name}`);
-      cy.completeAutomatedGame(player.name, player.age, player.country);
+    testCases.forEach(testCase => {
+      cy.autoLoginComplete(testCase.name, testCase.age, testCase.country);
       cy.wait(2000);
     });
-  });
-
-  it('should test login separately', () => {
-    cy.autoLogin('Sergio', 31, 'Belgium');
-    // Hierna kun je manual tests doen of verder automatiseren
-  });
-
-  it('should test only levels', () => {
-    cy.autoLogin('Sergio', 31, 'Belgium');
-    cy.playLevels(3);
   });
 });
