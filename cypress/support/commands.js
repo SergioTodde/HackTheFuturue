@@ -72,8 +72,8 @@ Cypress.Commands.add('completeAutomatedGame', (name, age, country) => {
 
   
   cy.wait(5000);
-  cy.contains('letter-and-crystal', { timeout: 15000 })
-    .click('letter-and-crystal');
+  cy.get('#letters', { timeout: 15000 })
+    .click();
   cy.log('✅ Mission gestart');
 
 
